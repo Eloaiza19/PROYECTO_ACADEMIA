@@ -273,3 +273,105 @@ Para este proyecto en la mayoría de controladores se utilizaron los siguientes 
 •	**Método show:** Es el detalle que controla los métodos de la vista detalles.
 •	**Método update:** El cual actualiza todos los datos ingresados por el usuario.
 
+#Errores comunes y soluciones
+**Al crear nuevos archivos de migración QueryException SQLSTATE[HY100]**
+
+Al crear un nuevo Modelo con su archivo de migración, y ejecutar dicha migración, es posible que dé un error como el siguiente:
+![](https://github.com/Eloaiza19/TestLaravel/blob/master/img2/Captura1.PNG?raw=true)
+
+Este error sucede debido al orden en que se han creado las migraciones por lo cual se arroja un problema al generar las llaves foráneas entre migraciones.
+
+Supongamos que usted va crear un nuevo Modelo llamado Categoría, para categorizar los diferentes cursos de la Academia. En este caso, lo que usted debería hacer es en la terminal ingresar el siguiente comando php artisan make:model Categoria –mcr luego se creara la migración el modelo y los recursos de Categoria. Finalmente configuramos la migración para relacionar la tabla cursos.
+
+**Al intentar acceder a una vista desde el navegador lanza el error SQLSTATE[HY000] [2002] No se puede establecer una conexión**
+![](https://github.com/Eloaiza19/TestLaravel/blob/master/img2/Captura2.PNG?raw=true)
+
+Es posible que exista un problema con el servidor de base de datos. Pruebe reiniciar el XAMPP o revise que dichas conexiones estén encendidas, el apache y el MySQL.
+
+•	**Al acceder a la vista principal de la Academia, no se cargan las imágenes**
+![](https://github.com/Eloaiza19/TestLaravel/blob/master/img2/Captura3.PNG?raw=true)
+
+Es posible que el origen del error sea causado por que el proyecto no se ejecutó correctamente. la solución para este fue ejecutar en la consola el siguiente comando: php artisan storage:link
+
+•	**Al migrar las tablas a la base de datos, generaba el siguiente error**
+![](https://github.com/Eloaiza19/TestLaravel/blob/master/img2/Captura4.PNG?raw=true)
+
+Las tablas no se migraron correctamente debido a el diseño lógico de la base de datos, no corresponden a los campos respecto a las tablas. La solución fue cambiar el orden de los campos.
+
+#Agregación de columnas en la base de Datos
+###Para agregar columnas nuevas a las tablas
+Para los siguientes casos, se asume que el programador ejecutará nuevamente las migraciones con un fresh, reconstruyendo todas las tablas de la base de datos.
+
+###Agregar columnas nuevas a la tabla Cursos
+Para esto, diríjase a la ruta database/migration, al archivo 2022_04_30_160631_create_cursos_table. Los campos actuales aparecen desde la línea 18. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo Curso, en la línea 10, protected $fillable y añadirlo dentro del array.
+
+###Agregar columnas nuevas a la tabla materias
+Para esto, diríjase a la ruta database/migration, al archivo 2022_08_25_102436_create_materias_table.php. Los campos actuales aparecen desde la línea 14. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo materia, en la línea 11, protected $fillable y añadirlo dentro del array.
+
+###Agregar columnas nuevas a la tabla Docentes
+Para esto, diríjase a la ruta database/migration, al archivo 2022_08_25_1234789_create docentes_table.php. Los campos actuales aparecen desde la línea 14. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo docentes, en la línea 10, protected $fillable y añadirlo dentro del array.
+
+###Agregar columnas nuevas a la tabla Estudiantes
+Para esto, diríjase a la ruta database/migration, al archivo 2022_08_25_789654_create_estudiante _table.php. Los campos actuales aparecen desde la línea 14. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo estudiantes, en la línea 10, protected $fillable y añadirlo dentro del array.
+
+###Agregar columnas nuevas a la tabla Países
+Para esto, diríjase a la ruta database/migration, al archivo 2022_08_25_102436_create_paises_table.php. Los campos actuales aparecen desde la línea 14. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo países, en la línea 11, protected $fillable y añadirlo dentro del array.
+
+###Agregar columnas nuevas a la tabla Departamentos
+Para esto, diríjase a la ruta database/migration, al archivo 2022_08_25_110214_create_departamentos_table.php. Los campos actuales aparecen desde la línea 14. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo departamentos, en la línea 11, protected $fillable y añadirlo dentro del array.
+
+###Agregar columnas nuevas a la tabla Municipios
+Para esto, diríjase a la ruta database/migration, al archivo 2022_08_25_111213_create_municipios_table.php. Los campos actuales aparecen desde la línea 14. Agregue el o los campos deseados en la posición que prefiera.
+También, debe especificar si es permitido manipular estos campos, por ejemplo, para una actualización de datos (Update dentro del CRUD), para lo cual debe dirigirse al modelo municipios, en la línea 11, protected $fillable y añadirlo dentro del array
+
+#Cambio del idioma
+Mencione algunos de los pasos mostrados en el video https://www.youtube.com/watch?v=VYTy0v8pUGo&ab_channel=CarranzaWebStudio para la configuración del idioma.
+•	Dentro de resources creamos una carpeta llamada lang.en.
+•	En la carpeta lang, debemos separar los lenguajes entre carpetas (en:ingles, es: español).
+•	Dentro de la carpeta en creamos un archivo que se llame mensajes.php, dentro del mismo creamos un array para las opciones.
+•	Creamos una llave que se llame título y ingresamos nuestro título y así sucesivamente con lo que necesitemos traducir.
+•	Copiamos y pegamos en la carpeta es, pero con nuestro texto cambiado o traducido.
+•	Si nos dirigimos a la lista y necesitamos cambiar algo lo podemos realizar utilizando la etiqueta @lang y dentro de los paréntesis ingresamos el nombre del archivo, debemos poner la respectiva llave.
+•	Podemos ir a nuestro archivo en config, app.php y le cambiamos la localidad a en o es.
+•	También podemos ingresar a la documentación y copiar la ruta y también la clase app y le agregamos la localidad.
+
+Estimado programador, para más información sobre idiomas y localización, vaya a la página de la documentación oficial de Laravel en https://laravel.com/docs/9.x/localization.
+
+#LICENCIA
+###LICENCIA DE SOFTWARE DE DEBIAN
+La licencia Debian es parte del contrato
+realizado entre Debian y la comunidad de usuarios de software
+libre, y se denomina Debian Free Software Guidelines (DFSG). En
+esencia, esta licencia contiene criterios para la
+distribución que incluyen, además de la exigencia
+de publicación del código fuente: (a) la
+redistribución libre; (b) el código fuente debe
+ser incluido y debe poder ser redistribuido; (c) todo trabajo
+derivado debe poder ser redistribuido bajo la misma licencia del
+original; (d) puede haber restricciones en cuanto a la
+redistribución del código fuente, si el original
+fue modificado; (e) la licencia no puede discriminar a ninguna
+persona o grupo de personas, así como tampoco ninguna
+forma de utilización del software; (f) los derechos
+otorgados no dependen del sitio en el que el software se
+encuentra; y (g) la licencia no puede 'contaminar' a otro
+software.
+
+Open Source. La licencia de Open Source
+Initiative deriva de Debian.
+
+#COLABORACIÓN
+Para que usted pueda colaborar con el desarrollo de este proyecto, bien sea para hacer mejoras o para crear su propia versión de programa, es necesario que siga estos pasos:
+1.	Deben ingresar al link del repositorio https://github.com/juananturi/AcademyFinal
+2.	Descarga el repositorio en un documento .zip.
+3.	Procede a descomprimirlo.
+4.	Debe generar la clave para el proyecto.
+5.	Enlazar la carpeta storage a public.
+6.	Configurar la base de datos e hacer migración a la misma. 
+7.	Php artisan storage:link para que las imágenes puedan cargar.
